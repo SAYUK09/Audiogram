@@ -11,13 +11,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-// import audioSource from "../public/audio.mp3";
-// import audiosource from "/audio.mp3";
-import coverImg from "./assets/cover.jpg";
-import CoverImg from "../public/next.svg";
 import {LINE_HEIGHT, PaginatedSubtitles} from "./Subtitles";
-import Image from "next/image";
-import Pic from "../public/vercel.svg";
 
 const AudioViz = () => {
   const frame = useCurrentFrame();
@@ -77,7 +71,6 @@ export const AudiogramComposition: React.FC<{
       .then((res) => res.text())
       .then((text) => {
         setSubtitles(text);
-        console.log(text, "ttttt");
         continueRender(handle);
       })
       .catch((err) => {
@@ -93,11 +86,7 @@ export const AudiogramComposition: React.FC<{
     <div ref={ref}>
       <AbsoluteFill>
         <Sequence from={-audioOffsetInFrames}>
-          <Audio
-            src={
-              "https://res.cloudinary.com/sayuk/video/upload/v1676829207/audiogram/audio/wd4qh1kkdrveighmgaka.mp3"
-            }
-          />
+          <Audio src={audiogramDetails.audio} />
 
           <div
             className="container"
@@ -108,17 +97,12 @@ export const AudiogramComposition: React.FC<{
             <div className="row">
               <Img
                 className="cover"
-                src={
-                  "https://res.cloudinary.com/sayuk/image/upload/v1676829207/audiogram/images/bakeh2b3y4fbx27l8uqw.jpg"
-                }
+                src={audiogramDetails.cover}
                 width={500}
-                alt="ddd"
+                alt="cover image"
               />
 
-              <div className="title">
-                #234 – Money, Kids, and Choosing Your Market with Justin Jackson
-                of Transistor.fm
-              </div>
+              <div className="title">{audiogramDetails.title}</div>
             </div>
 
             <div>
@@ -139,5 +123,3 @@ export const AudiogramComposition: React.FC<{
     </div>
   );
 };
-
-// https://res.cloudinary.com/sayuk/video/upload/v1676829207/audiogram/audio/wd4qh1kkdrveighmgaka.mp3
