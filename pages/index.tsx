@@ -14,13 +14,16 @@ export default function Home() {
   const fps = 30;
   const durationInFrames = 30 * fps;
 
-  const [file, setFile] = useState<null | any>(null);
-  const [url, setUrl] = useState<null | any>(null);
+  const [file, setFile] = useState<null | File>(null);
+  const [url, setUrl] = useState<null | string>(null);
 
   const uploadImage = async () => {
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "audiogramImages");
+
+    if (file) {
+      formData.append("file", file);
+      formData.append("upload_preset", "audiogramImages");
+    }
 
     try {
       const res = await axios.post(
@@ -33,8 +36,10 @@ export default function Home() {
     }
   };
 
-  const handleFileInputChange = (event: any) => {
-    setFile(event.target.files[0]);
+  const handleFileInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFile(event.target.files![0]);
   };
 
   const {audiogramDetails} = useAudiogram();
