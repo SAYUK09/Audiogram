@@ -5,12 +5,38 @@ import styles from "@/styles/Home.module.css";
 import {Player} from "@remotion/player";
 import {useAudiogram} from "@/contexts/audiogramContext";
 import {AudiogramComposition} from "@/remotion/Composition";
+import {useState} from "react";
 
 const inter = Inter({subsets: ["latin"]});
 
 export default function Home() {
   const fps = 30;
   const durationInFrames = 30 * fps;
+
+  const cloudinaryUploader = () => {
+    const [file, setFile] = useState<null | any>(null);
+    const [url, setUrl] = useState<null | any>(null);
+
+    const uploadImage = async () => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "YOUR_UPLOAD_PRESET"); // replace with your upload preset name
+
+      try {
+        const res = await axios.post(
+          "https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload", // replace with your cloud name
+          formData
+        );
+        setUrl(res.data.secure_url);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const handleFileInputChange = (event: any) => {
+      setFile(event.target.files[0]);
+    };
+  };
 
   const {audiogramDetails} = useAudiogram();
   return (

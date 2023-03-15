@@ -16,9 +16,9 @@ export const AudiogramProvider: React.FC<{children: React.ReactNode}> = ({
     cover:
       "https://res.cloudinary.com/sayuk/image/upload/v1676829207/audiogram/images/bakeh2b3y4fbx27l8uqw.jpg",
     audio:
-      "https://res.cloudinary.com/sayuk/video/upload/v1676829207/audiogram/audio/wd4qh1kkdrveighmgaka.mp3",
+      "https://res.cloudinary.com/sayuk/video/upload/v1678903786/audiogram/audio/clip_vtfg3k.mp3",
     srtFile:
-      "https://res.cloudinary.com/sayuk/raw/upload/v1676829206/audiogram/srt/hbskfawyc9flxhzpfw69.srt",
+      "https://res.cloudinary.com/sayuk/raw/upload/v1678903919/audiogram/srt/cxqootjlvcluiagbpeob.srt",
   });
 
   return (
