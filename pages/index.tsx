@@ -7,40 +7,13 @@ import {useAudiogram} from "@/contexts/audiogramContext";
 import {AudiogramComposition} from "@/remotion/Composition";
 import {useState} from "react";
 import axios from "axios";
+import ImageUploader from "@/components/ImageUploader";
 
 const inter = Inter({subsets: ["latin"]});
 
 export default function Home() {
   const fps = 30;
   const durationInFrames = 30 * fps;
-
-  const [file, setFile] = useState<null | File>(null);
-  const [url, setUrl] = useState<null | string>(null);
-
-  const uploadImage = async () => {
-    const formData = new FormData();
-
-    if (file) {
-      formData.append("file", file);
-      formData.append("upload_preset", "audiogramImages");
-    }
-
-    try {
-      const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/sayuk/image/upload",
-        formData
-      );
-      setUrl(res.data.secure_url);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleFileInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFile(event.target.files![0]);
-  };
 
   const {audiogramDetails} = useAudiogram();
   return (
@@ -54,9 +27,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.description}>
           <div>
-            <input type="file" onChange={handleFileInputChange} />
-            <button onClick={uploadImage}>Upload Image</button>
-            {url && <img src={url} alt="uploaded image" />}
+            <ImageUploader />
           </div>
 
           <Player
