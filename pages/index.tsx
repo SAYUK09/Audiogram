@@ -8,6 +8,7 @@ import {AudiogramComposition} from "@/remotion/Composition";
 import {useState} from "react";
 import axios from "axios";
 import ImageUploader from "@/components/ImageUploader";
+import AudioUploader from "@/components/AudioUploader";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -28,6 +29,10 @@ export default function Home() {
         <div className={styles.description}>
           <div>
             <ImageUploader />
+          </div>
+
+          <div>
+            <AudioUploader />
           </div>
 
           <Player
