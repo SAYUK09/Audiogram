@@ -1,4 +1,5 @@
 import {useAudiogram} from "@/contexts/audiogramContext";
+import {transcribeAudio} from "@/services/transcription";
 import axios from "axios";
 import React, {useState} from "react";
 
@@ -25,15 +26,22 @@ function AudioUploader() {
       formData.append("file", file);
       formData.append("upload_preset", "audiogramAudio");
 
-      const response = await axios.post(
+      const {data} = await axios.post(
         "https://api.cloudinary.com/v1_1/sayuk/upload",
         formData
       );
+      const {secure_url: audioUrl} = data;
 
-      setAudiogramDetails({
-        ...audiogramDetails,
-        audio: response.data.secure_url,
-      });
+      // Calling Transcription Service
+      const srtUrl = await transcribeAudio(data.secure_url);
+
+      audioUrl &&
+        srtUrl &&
+        setAudiogramDetails({
+          ...audiogramDetails,
+          audio: audioUrl,
+          srtFile: srtUrl,
+        });
     } catch (error) {
       console.log(error);
     }
