@@ -57,13 +57,22 @@ const AudioViz = () => {
 export const AudiogramComposition: React.FC<{
   source: string;
   audioOffsetInFrames: number;
-}> = ({source, audioOffsetInFrames}) => {
+  backgroundColor: string;
+  textColor: string;
+  titleColor: string;
+}> = ({
+  source,
+  audioOffsetInFrames,
+  backgroundColor,
+  textColor,
+  titleColor,
+}) => {
   const {durationInFrames} = useVideoConfig();
 
   const [handle] = useState(() => delayRender());
   const [subtitles, setSubtitles] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
-
+  console.log(backgroundColor);
   const {audiogramDetails} = useAudiogram();
 
   useEffect(() => {
@@ -72,6 +81,8 @@ export const AudiogramComposition: React.FC<{
       .then((text) => {
         setSubtitles(text);
         continueRender(handle);
+
+        console.log(text, "textetete");
       })
       .catch((err) => {
         console.log("Error fetching subtitles", err);
@@ -92,6 +103,7 @@ export const AudiogramComposition: React.FC<{
             className="container"
             style={{
               fontFamily: "IBM Plex Sans",
+              backgroundColor: backgroundColor,
             }}
           >
             <div className="row">
@@ -102,14 +114,19 @@ export const AudiogramComposition: React.FC<{
                 alt="cover image"
               />
 
-              <div className="title">{audiogramDetails.title}</div>
+              <div style={{color: titleColor}} className="title">
+                {audiogramDetails.title}
+              </div>
             </div>
 
             <div>
               <AudioViz />
             </div>
 
-            <div style={{lineHeight: `${LINE_HEIGHT}px`}} className="captions">
+            <div
+              style={{lineHeight: `${LINE_HEIGHT}px`, color: textColor}}
+              className="captions"
+            >
               <PaginatedSubtitles
                 subtitles={subtitles}
                 startFrame={audioOffsetInFrames}

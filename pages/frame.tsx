@@ -76,6 +76,9 @@ function frame() {
           inputProps={{
             audioOffsetInFrames: 0,
             source: audiogramDetails.srtFile,
+            backgroundColor: audiogramDetails.backgroundColor,
+            textColor: audiogramDetails.textColor,
+            titleColor: audiogramDetails.titleColor,
           }}
         />
       )}

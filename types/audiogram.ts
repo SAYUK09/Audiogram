@@ -4,4 +4,7 @@ export interface IAudiogramDetails {
   audio: string;
   srtFile: string;
   orientation: any;
+  backgroundColor: string;
+  textColor: string;
+  titleColor: string;
 }
