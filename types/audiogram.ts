@@ -3,4 +3,5 @@ export interface IAudiogramDetails {
   cover: string;
   audio: string;
   srtFile: string;
+  orientation: any;
 }
