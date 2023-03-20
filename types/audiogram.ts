@@ -4,6 +4,10 @@ export interface IAudiogramDetails {
   audio: string;
   srtFile: string;
   orientation: any;
+  designProps: IDesignProps;
+}
+
+export interface IDesignProps {
   backgroundColor: string;
   textColor: string;
   titleColor: string;

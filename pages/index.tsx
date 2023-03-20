@@ -48,9 +48,9 @@ export default function Home() {
             inputProps={{
               audioOffsetInFrames: 0,
               source: audiogramDetails.srtFile,
-              backgroundColor: audiogramDetails.backgroundColor,
-              textColor: audiogramDetails.textColor,
-              titleColor: audiogramDetails.titleColor,
+              backgroundColor: audiogramDetails.designProps.backgroundColor,
+              textColor: audiogramDetails.designProps.textColor,
+              titleColor: audiogramDetails.designProps.titleColor,
             }}
           />
         </div>

@@ -46,9 +46,12 @@ export const AudiogramProvider: React.FC<{children: React.ReactNode}> = ({
     srtFile:
       "https://res.cloudinary.com/sayuk/raw/upload/v1679130523/audiogram/srt/jjazegz2oxj0zyolbcla.srt",
     orientation: orientationType.landscape,
-    backgroundColor: "purple",
-    textColor: "yellow",
-    titleColor: "red",
+
+    designProps: {
+      backgroundColor: "purple",
+      textColor: "yellow",
+      titleColor: "red",
+    },
   });
 
   return (
