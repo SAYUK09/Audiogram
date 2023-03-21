@@ -16,9 +16,8 @@ import {LINE_HEIGHT, PaginatedSubtitles} from "./Subtitles";
 const AudioViz = () => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const audioData = useAudioData(
-    "https://res.cloudinary.com/sayuk/video/upload/v1676829207/audiogram/audio/wd4qh1kkdrveighmgaka.mp3"
-  );
+  const {audiogramDetails} = useAudiogram();
+  const audioData = useAudioData(audiogramDetails.audio);
 
   if (!audioData) {
     return null;
@@ -72,7 +71,7 @@ export const AudiogramComposition: React.FC<{
   const [handle] = useState(() => delayRender());
   const [subtitles, setSubtitles] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
-  console.log(backgroundColor);
+
   const {audiogramDetails} = useAudiogram();
 
   useEffect(() => {
