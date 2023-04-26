@@ -20,6 +20,7 @@
     "@remotion/lambda": "3.3.65",
     "@remotion/player": "3.3.65",
     "@remotion/renderer": "3.3.65",
+    "@tabler/icons-react": "^2.17.0",
     "@types/node": "18.15.0",
     "@types/react": "18.0.28",
     "@types/react-color": "^3.0.6",

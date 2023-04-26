@@ -1,5 +1,5 @@
 import {AudiogramProvider} from "@/contexts/audiogramContext";
-import "@/styles/globals.css";
+// import "@/styles/globals.css";
 import "../remotion/style.css";
 import type {AppProps} from "next/app";
 import {MantineProvider} from "@mantine/core";

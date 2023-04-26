@@ -1,21 +1,81 @@
 import Head from "next/head";
 import {Inter} from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import {Player} from "@remotion/player";
 import {useAudiogram} from "@/contexts/audiogramContext";
-import {AudiogramComposition} from "@/remotion/Composition";
-import {useState} from "react";
 import axios from "axios";
-import ImageUploader from "@/components/ImageUploader";
-import AudioUploader from "@/components/AudioUploader";
+import Link from "next/link";
+import FileUpload from "@/components/FileDropzoneUpload";
+import {
+  FileWithPath,
+  IMAGE_MIME_TYPE,
+  MIME_TYPES,
+  PDF_MIME_TYPE,
+} from "@mantine/dropzone";
+import {transcribeAudio} from "@/services/transcription";
+import {Button} from "@mantine/core";
 
 const inter = Inter({subsets: ["latin"]});
 
 export default function Home() {
   const fps = 30;
   const durationInFrames = 30 * fps;
+  const {audiogramDetails, setAudiogramDetails} = useAudiogram();
+  const {} = useAudiogram();
 
-  const {audiogramDetails} = useAudiogram();
+  const acceptedFileTypes = ".mp3";
+
+  const uploadImage = async (files: FileWithPath[]) => {
+    const formData = new FormData();
+
+    console.log(files, "fiflfilfiflfi");
+
+    if (files[0]) {
+      formData.append("file", files[0]);
+      formData.append("upload_preset", "audiogramImages");
+    }
+
+    try {
+      const res = await axios.post(
+        "https://api.cloudinary.com/v1_1/sayuk/image/upload",
+        formData
+      );
+
+      setAudiogramDetails({...audiogramDetails, cover: res.data.secure_url});
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const uploadAudio = async (files: FileWithPath[]) => {
+    try {
+      if (!files[0]) {
+        throw new Error("Please select a file.");
+      }
+
+      const formData = new FormData();
+      formData.append("file", files[0]);
+      formData.append("upload_preset", "audiogramAudio");
+
+      const {data} = await axios.post(
+        "https://api.cloudinary.com/v1_1/sayuk/upload",
+        formData
+      );
+      const {secure_url: audioUrl} = data;
+
+      // Calling Transcription Service
+      const srtUrl = await transcribeAudio(data.secure_url);
+
+      audioUrl &&
+        srtUrl &&
+        setAudiogramDetails({
+          ...audiogramDetails,
+          audio: audioUrl,
+          srtFile: srtUrl,
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -24,36 +84,29 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
+      <main>
+        <div>
           <div>
-            <ImageUploader />
+            <FileUpload onDrop={uploadAudio} accept={[acceptedFileTypes]} />
           </div>
 
           <div>
-            <AudioUploader />
+            <FileUpload onDrop={uploadImage} accept={IMAGE_MIME_TYPE} />
           </div>
-
-          <Player
-            component={AudiogramComposition}
-            durationInFrames={durationInFrames}
-            fps={fps}
-            compositionWidth={1920}
-            compositionHeight={1080}
-            style={{
-              width: 1280,
-              height: 720,
-            }}
-            controls
-            inputProps={{
-              audioOffsetInFrames: 0,
-              source: audiogramDetails.srtFile,
-              backgroundColor: audiogramDetails.designProps.backgroundColor,
-              textColor: audiogramDetails.designProps.textColor,
-              titleColor: audiogramDetails.designProps.titleColor,
-            }}
-          />
         </div>
+
+        <Link href={"./frame"}>
+          <Button
+            size="md"
+            disabled={
+              audiogramDetails.srtFile.length && audiogramDetails.cover.length
+                ? false
+                : true
+            }
+          >
+            Next
+          </Button>
+        </Link>
       </main>
     </>
   );
