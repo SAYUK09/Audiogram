@@ -1,12 +1,52 @@
 import {useAudiogram} from "@/contexts/audiogramContext";
 import {AudiogramComposition} from "@/remotion/Composition";
+import {exportVideo, getDownloadUrlAndProgress} from "@/services/export";
 import {Player} from "@remotion/player";
-import React, {useRef} from "react";
-import {BlockPicker} from "react-color";
+import React, {useRef, useState} from "react";
+import {ColorPicker, Text, Stack} from "@mantine/core";
 
-function design() {
+function Design() {
   const {audiogramDetails, setAudiogramDetails} = useAudiogram();
   const titleInput = useRef<HTMLInputElement | null>(null);
+
+  const [downloadURL, setDownloadURL] = useState<string>("");
+
+  async function handleExport() {
+    const {data} = await exportVideo({
+      inputProps: {
+        backgroundColor: audiogramDetails.designProps.backgroundColor,
+        textColor: audiogramDetails.designProps.textColor,
+        audio: audiogramDetails.audio,
+        source: audiogramDetails.srtFile,
+        title: audiogramDetails.title,
+        cover: audiogramDetails.cover,
+        audioOffsetInFrames: 0,
+      },
+      width: audiogramDetails.orientation.compositionWidth,
+      height: audiogramDetails.orientation.compositionHeight,
+    });
+
+    if (data.bucketName && data.renderId) {
+      getDownloadURL(data);
+    }
+  }
+
+  async function getDownloadURL(body: any) {
+    const inputBody = body;
+
+    setDownloadURL("loading");
+    const {
+      data: {data},
+    } = await getDownloadUrlAndProgress(body);
+
+    if (!data.done) {
+      setTimeout(() => {
+        getDownloadURL(inputBody);
+      }, 8000);
+    } else {
+      setDownloadURL(data.url);
+    }
+  }
 
   const fps = 30;
   const durationInFrames = 30 * fps;
@@ -27,70 +67,118 @@ function design() {
           }}
         />
       </div>
-
-      <div className="flex w-full justify-center items-center flex-col my-3 ">
-        <div>
-          <h3>Background Color</h3>
-        </div>
+      <Stack>
+        <Text fz={"xl"}>Background Color</Text>
 
         <div className="mt-4">
-          <BlockPicker
-            color={audiogramDetails.designProps.backgroundColor}
+          <ColorPicker
+            format="hex"
+            swatchesPerRow={7}
+            swatches={[
+              "#25262b",
+              "#868e96",
+              "#FFFFFF",
+              "#e64980",
+              "#be4bdb",
+              "#7950f2",
+              "#4c6ef5",
+              "#228be6",
+              "#15aabf",
+              "#12b886",
+              "#40c057",
+              "#82c91e",
+              "#fab005",
+              "#fd7e14",
+            ]}
+            value={audiogramDetails.designProps.backgroundColor}
             onChange={(color) => {
               setAudiogramDetails({
                 ...audiogramDetails,
                 designProps: {
                   ...audiogramDetails.designProps,
-                  backgroundColor: color.hex,
+                  backgroundColor: color,
                 },
               });
             }}
           />
         </div>
-      </div>
-
-      <div className="flex flex-col my-3 ">
+      </Stack>
+      <Stack>
         <div>
-          <h3>Text Color</h3>
+          <Text fz={"xl"}>Text Color</Text>
         </div>
 
         <div className="mt-10">
-          <BlockPicker
-            color={audiogramDetails.designProps.titleColor}
+          <ColorPicker
+            format="hex"
+            swatchesPerRow={7}
+            swatches={[
+              "#25262b",
+              "#868e96",
+              "#FFFFFF",
+              "#e64980",
+              "#be4bdb",
+              "#7950f2",
+              "#4c6ef5",
+              "#228be6",
+              "#15aabf",
+              "#12b886",
+              "#40c057",
+              "#82c91e",
+              "#fab005",
+              "#fd7e14",
+            ]}
+            value={audiogramDetails.designProps.backgroundColor}
             onChange={(color) => {
               setAudiogramDetails({
                 ...audiogramDetails,
                 designProps: {
                   ...audiogramDetails.designProps,
-                  titleColor: color.hex,
+                  titleColor: color,
                 },
               });
             }}
           />
         </div>
-      </div>
-
-      <div className="flex flex-col my-3 ">
+      </Stack>
+      <Stack>
         <div>
-          <h3>Subtitles Color</h3>
+          <Text fz={"xl"}>Subtitles Color</Text>
         </div>
 
         <div className="mt-10">
-          <BlockPicker
-            color={audiogramDetails.designProps.textColor}
+          <ColorPicker
+            format="hex"
+            swatchesPerRow={7}
+            swatches={[
+              "#25262b",
+              "#868e96",
+              "#FFFFFF",
+              "#e64980",
+              "#be4bdb",
+              "#7950f2",
+              "#4c6ef5",
+              "#228be6",
+              "#15aabf",
+              "#12b886",
+              "#40c057",
+              "#82c91e",
+              "#fab005",
+              "#fd7e14",
+            ]}
+            value={audiogramDetails.designProps.backgroundColor}
             onChange={(color) => {
               setAudiogramDetails({
                 ...audiogramDetails,
                 designProps: {
                   ...audiogramDetails.designProps,
-                  textColor: color.hex,
+                  textColor: color,
                 },
               });
             }}
           />
         </div>
-      </div>
-
+      </Stack>
       {audiogramDetails.audio && audiogramDetails.srtFile && (
         <Player
           component={AudiogramComposition}
@@ -112,8 +200,10 @@ function design() {
           }}
         />
       )}
+      <button onClick={handleExport}>Download Video</button>
+      URL: {downloadURL}
     </div>
   );
 }
 
-export default design;
+export default Design;

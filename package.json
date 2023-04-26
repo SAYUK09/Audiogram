@@ -32,7 +32,6 @@
     "next": "13.2.4",
     "parse-srt": "^1.0.0-alpha",
     "react": "18.2.0",
-    "react-color": "^2.19.3",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.43.7",
