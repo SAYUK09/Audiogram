@@ -3,7 +3,15 @@ import {AudiogramComposition} from "@/remotion/Composition";
 import {exportVideo, getDownloadUrlAndProgress} from "@/services/export";
 import {Player} from "@remotion/player";
 import React, {useRef, useState} from "react";
-import {ColorPicker, Text, Stack} from "@mantine/core";
+import {
+  ColorPicker,
+  Text,
+  Stack,
+  Flex,
+  Group,
+  Box,
+  TextInput,
+} from "@mantine/core";
 
 function Design() {
   const {audiogramDetails, setAudiogramDetails} = useAudiogram();
@@ -51,158 +59,174 @@ function Design() {
   const fps = 30;
   const durationInFrames = 30 * fps;
   return (
-    <div>
-      <div className="flex flex-col justify-center items-start w-full">
-        <p className="text-[#575E63] font-semibold text-sm">Title</p>
-        <input
-          placeholder="title goes here"
-          ref={titleInput}
-          className="bg-gray-300 border-none rounded-sm"
-          type="text"
-          onChange={(e) => {
-            setAudiogramDetails({
-              ...audiogramDetails,
-              title: e.target.value,
-            });
-          }}
-        />
-      </div>
-      <Stack>
-        <Text fz={"xl"}>Background Color</Text>
-
-        <div className="mt-4">
-          <ColorPicker
-            format="hex"
-            swatchesPerRow={7}
-            swatches={[
-              "#25262b",
-              "#868e96",
-              "#FFFFFF",
-              "#e64980",
-              "#be4bdb",
-              "#7950f2",
-              "#4c6ef5",
-              "#228be6",
-              "#15aabf",
-              "#12b886",
-              "#40c057",
-              "#82c91e",
-              "#fab005",
-              "#fd7e14",
-            ]}
-            value={audiogramDetails.designProps.backgroundColor}
-            onChange={(color) => {
+    <Flex
+      p={32}
+      gap="xl"
+      justify="space-around"
+      align="center"
+      direction="row"
+      wrap="wrap"
+      mih={"100vh"}
+    >
+      <Stack align="start" justify="space-around" spacing="lg">
+        <Box className="flex flex-col justify-center items-start w-full">
+          <TextInput
+            placeholder="Enter Title"
+            label="Title"
+            variant="filled"
+            radius="md"
+            size="lg"
+            onChange={(e) => {
               setAudiogramDetails({
                 ...audiogramDetails,
-                designProps: {
-                  ...audiogramDetails.designProps,
-                  backgroundColor: color,
-                },
+                title: e.target.value,
               });
             }}
           />
-        </div>
+        </Box>
+
+        <Stack>
+          <Group spacing="sm">
+            <Stack>
+              <Text fz={"xl"}>Background Color</Text>
+
+              <Box className="mt-4">
+                <ColorPicker
+                  format="hex"
+                  swatchesPerRow={7}
+                  swatches={[
+                    "#25262b",
+                    "#868e96",
+                    "#FFFFFF",
+                    "#e64980",
+                    "#be4bdb",
+                    "#7950f2",
+                    "#4c6ef5",
+                    "#228be6",
+                    "#15aabf",
+                    "#12b886",
+                    "#40c057",
+                    "#82c91e",
+                    "#fab005",
+                    "#fd7e14",
+                  ]}
+                  value={audiogramDetails.designProps.backgroundColor}
+                  onChange={(color) => {
+                    setAudiogramDetails({
+                      ...audiogramDetails,
+                      designProps: {
+                        ...audiogramDetails.designProps,
+                        backgroundColor: color,
+                      },
+                    });
+                  }}
+                />
+              </Box>
+            </Stack>
+            <Stack>
+              <Box>
+                <Text fz={"xl"}>Text Color</Text>
+              </Box>
+
+              <Box className="mt-10">
+                <ColorPicker
+                  format="hex"
+                  swatchesPerRow={7}
+                  swatches={[
+                    "#25262b",
+                    "#868e96",
+                    "#FFFFFF",
+                    "#e64980",
+                    "#be4bdb",
+                    "#7950f2",
+                    "#4c6ef5",
+                    "#228be6",
+                    "#15aabf",
+                    "#12b886",
+                    "#40c057",
+                    "#82c91e",
+                    "#fab005",
+                    "#fd7e14",
+                  ]}
+                  value={audiogramDetails.designProps.backgroundColor}
+                  onChange={(color) => {
+                    setAudiogramDetails({
+                      ...audiogramDetails,
+                      designProps: {
+                        ...audiogramDetails.designProps,
+                        titleColor: color,
+                      },
+                    });
+                  }}
+                />
+              </Box>
+            </Stack>
+            <Stack>
+              <Box>
+                <Text fz={"xl"}>Subtitles Color</Text>
+              </Box>
+
+              <Box className="mt-10">
+                <ColorPicker
+                  format="hex"
+                  swatchesPerRow={7}
+                  swatches={[
+                    "#25262b",
+                    "#868e96",
+                    "#FFFFFF",
+                    "#e64980",
+                    "#be4bdb",
+                    "#7950f2",
+                    "#4c6ef5",
+                    "#228be6",
+                    "#15aabf",
+                    "#12b886",
+                    "#40c057",
+                    "#82c91e",
+                    "#fab005",
+                    "#fd7e14",
+                  ]}
+                  value={audiogramDetails.designProps.backgroundColor}
+                  onChange={(color) => {
+                    setAudiogramDetails({
+                      ...audiogramDetails,
+                      designProps: {
+                        ...audiogramDetails.designProps,
+                        textColor: color,
+                      },
+                    });
+                  }}
+                />
+              </Box>
+            </Stack>
+          </Group>
+        </Stack>
       </Stack>
       <Stack>
-        <div>
-          <Text fz={"xl"}>Text Color</Text>
-        </div>
-
-        <div className="mt-10">
-          <ColorPicker
-            format="hex"
-            swatchesPerRow={7}
-            swatches={[
-              "#25262b",
-              "#868e96",
-              "#FFFFFF",
-              "#e64980",
-              "#be4bdb",
-              "#7950f2",
-              "#4c6ef5",
-              "#228be6",
-              "#15aabf",
-              "#12b886",
-              "#40c057",
-              "#82c91e",
-              "#fab005",
-              "#fd7e14",
-            ]}
-            value={audiogramDetails.designProps.backgroundColor}
-            onChange={(color) => {
-              setAudiogramDetails({
-                ...audiogramDetails,
-                designProps: {
-                  ...audiogramDetails.designProps,
-                  titleColor: color,
-                },
-              });
+        {audiogramDetails.audio && audiogramDetails.srtFile && (
+          <Player
+            component={AudiogramComposition}
+            durationInFrames={durationInFrames}
+            fps={fps}
+            compositionWidth={audiogramDetails.orientation.compositionWidth}
+            compositionHeight={audiogramDetails.orientation.compositionHeight}
+            style={{
+              width: audiogramDetails.orientation.width,
+              height: audiogramDetails.orientation.height,
+            }}
+            controls
+            inputProps={{
+              audioOffsetInFrames: 0,
+              source: audiogramDetails.srtFile,
+              backgroundColor: audiogramDetails.designProps.backgroundColor,
+              textColor: audiogramDetails.designProps.textColor,
+              titleColor: audiogramDetails.designProps.titleColor,
             }}
           />
-        </div>
+        )}
       </Stack>
-      <Stack>
-        <div>
-          <Text fz={"xl"}>Subtitles Color</Text>
-        </div>
-
-        <div className="mt-10">
-          <ColorPicker
-            format="hex"
-            swatchesPerRow={7}
-            swatches={[
-              "#25262b",
-              "#868e96",
-              "#FFFFFF",
-              "#e64980",
-              "#be4bdb",
-              "#7950f2",
-              "#4c6ef5",
-              "#228be6",
-              "#15aabf",
-              "#12b886",
-              "#40c057",
-              "#82c91e",
-              "#fab005",
-              "#fd7e14",
-            ]}
-            value={audiogramDetails.designProps.backgroundColor}
-            onChange={(color) => {
-              setAudiogramDetails({
-                ...audiogramDetails,
-                designProps: {
-                  ...audiogramDetails.designProps,
-                  textColor: color,
-                },
-              });
-            }}
-          />
-        </div>
-      </Stack>
-      {audiogramDetails.audio && audiogramDetails.srtFile && (
-        <Player
-          component={AudiogramComposition}
-          durationInFrames={durationInFrames}
-          fps={fps}
-          compositionWidth={audiogramDetails.orientation.compositionWidth}
-          compositionHeight={audiogramDetails.orientation.compositionHeight}
-          style={{
-            width: audiogramDetails.orientation.width,
-            height: audiogramDetails.orientation.height,
-          }}
-          controls
-          inputProps={{
-            audioOffsetInFrames: 0,
-            source: audiogramDetails.srtFile,
-            backgroundColor: audiogramDetails.designProps.backgroundColor,
-            textColor: audiogramDetails.designProps.textColor,
-            titleColor: audiogramDetails.designProps.titleColor,
-          }}
-        />
-      )}
-      <button onClick={handleExport}>Download Video</button>
-      URL: {downloadURL}
-    </div>
+      {/* <button onClick={handleExport}>Download Video</button> */}
+    </Flex>
   );
 }
 
