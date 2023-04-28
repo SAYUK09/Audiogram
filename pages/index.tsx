@@ -11,7 +11,7 @@ import {
   PDF_MIME_TYPE,
 } from "@mantine/dropzone";
 import {transcribeAudio} from "@/services/transcription";
-import {Button} from "@mantine/core";
+import {Box, Button, Flex, Stack} from "@mantine/core";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -85,28 +85,41 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>
-          <div>
-            <FileUpload onDrop={uploadAudio} accept={[acceptedFileTypes]} />
-          </div>
+        <Flex
+          h={"100vh"}
+          gap="xl"
+          justify="space-between"
+          align="stretch"
+          direction="column"
+          wrap="wrap"
+          p={32}
+        >
+          <Stack>
+            <Box>
+              <FileUpload onDrop={uploadAudio} accept={[acceptedFileTypes]} />
+            </Box>
 
-          <div>
-            <FileUpload onDrop={uploadImage} accept={IMAGE_MIME_TYPE} />
-          </div>
-        </div>
+            <Box>
+              <FileUpload onDrop={uploadImage} accept={IMAGE_MIME_TYPE} />
+            </Box>
+          </Stack>
 
-        <Link href={"./frame"}>
-          <Button
-            size="md"
-            disabled={
-              audiogramDetails.srtFile.length && audiogramDetails.cover.length
-                ? false
-                : true
-            }
-          >
-            Next
-          </Button>
-        </Link>
+          <Stack>
+            <Link href={"./frame"} style={{alignSelf: "end"}}>
+              <Button
+                size="md"
+                disabled={
+                  audiogramDetails.srtFile.length &&
+                  audiogramDetails.cover.length
+                    ? false
+                    : true
+                }
+              >
+                Next
+              </Button>
+            </Link>
+          </Stack>
+        </Flex>
       </main>
     </>
   );
