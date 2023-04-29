@@ -1,7 +1,15 @@
 import {orientationType, useAudiogram} from "@/contexts/audiogramContext";
 import {AudiogramComposition} from "@/remotion/Composition";
 import {Player} from "@remotion/player";
-import React from "react";
+import Link from "next/link";
+import React, {useState} from "react";
+import LandscapeIcon from "@/assets/landscape-icon.svg";
+import {
+  IconRectangle,
+  IconRectangleVertical,
+  IconSquare,
+} from "@tabler/icons-react";
+import {ActionIcon, Box, Button, Flex, Group, Stack, Text} from "@mantine/core";
 
 function frame() {
   const {audiogramDetails, setAudiogramDetails} = useAudiogram();
@@ -18,71 +26,90 @@ function frame() {
   };
 
   return (
-    <div>
-      <div className="flex flex-col">
-        <div>
-          <p className="text-[#1E272ECF] font-semibold text-2xl">
-            Select Frame
-          </p>
-        </div>
+    <Flex direction={"column"} mih={"100vh"} p={32}>
+      <Flex
+        gap="xl"
+        justify="space-around"
+        align="center"
+        direction="row"
+        wrap="wrap"
+        style={{flexGrow: 1}}
+      >
+        <Stack>
+          <Text fz={"xl"}>Select Frame</Text>
 
-        <div className="flex flex-col">
-          <div className="w-full">
-            <button
-              className="flex py-4 justify-around w-full"
-              onClick={() => clickHandler("landscape")}
-            >
-              <p className="text-base font-semibold">Landscape</p>
+          <Group className="flex flex-col">
+            <Box>
+              <Button
+                onClick={() => clickHandler("landscape")}
+                leftIcon={<IconRectangle />}
+                variant="white"
+              >
+                Landscape
+              </Button>
+            </Box>
 
-              {/* <img src={} alt="" /> */}
-            </button>
-          </div>
+            <Box>
+              <Button
+                onClick={() => clickHandler("square")}
+                leftIcon={<IconSquare />}
+                variant="white"
+              >
+                Square
+              </Button>
+            </Box>
 
-          <div className="w-full">
-            <button
-              className="flex py-4 justify-around w-full"
-              onClick={() => clickHandler("square")}
-            >
-              <p className="text-base text-left font-semibold">Sqaure</p>
+            <Box>
+              <Button
+                onClick={() => clickHandler("portrait")}
+                leftIcon={<IconRectangleVertical />}
+                variant="white"
+              >
+                Portrait
+              </Button>
+            </Box>
+          </Group>
+        </Stack>
 
-              {/* <img src={} alt="" /> */}
-            </button>
-          </div>
-
-          <div className="w-full">
-            <button
-              className="flex py-4 justify-around w-full"
-              onClick={() => clickHandler("portrait")}
-            >
-              <p className="text-base font-semibold">Portrait</p>
-
-              {/* <img src={} alt="" /> */}
-            </button>
-          </div>
-        </div>
-      </div>
-      {audiogramDetails.audio && audiogramDetails.srtFile && (
-        <Player
-          component={AudiogramComposition}
-          durationInFrames={durationInFrames}
-          fps={fps}
-          compositionWidth={audiogramDetails.orientation.compositionWidth}
-          compositionHeight={audiogramDetails.orientation.compositionHeight}
-          style={{
-            width: audiogramDetails.orientation.width,
-            height: audiogramDetails.orientation.height,
-          }}
-          controls
-          inputProps={{
-            audioOffsetInFrames: 0,
-            source: audiogramDetails.srtFile,
-            backgroundColor: audiogramDetails.designProps.backgroundColor,
-            textColor: audiogramDetails.designProps.textColor,
-            titleColor: audiogramDetails.designProps.titleColor,
-          }}
-        />
-      )}
-    </div>
+        <Stack w={"50%"} align="center">
+          {audiogramDetails.audio && audiogramDetails.srtFile && (
+            <Player
+              component={AudiogramComposition}
+              durationInFrames={durationInFrames}
+              fps={fps}
+              compositionWidth={audiogramDetails.orientation.compositionWidth}
+              compositionHeight={audiogramDetails.orientation.compositionHeight}
+              style={{
+                width: audiogramDetails.orientation.width,
+                height: audiogramDetails.orientation.height,
+              }}
+              controls
+              inputProps={{
+                audioOffsetInFrames: 0,
+                source: audiogramDetails.srtFile,
+                backgroundColor: audiogramDetails.designProps.backgroundColor,
+                textColor: audiogramDetails.designProps.textColor,
+                titleColor: audiogramDetails.designProps.titleColor,
+              }}
+            />
+          )}
+        </Stack>
+      </Flex>
+      <Stack>
+        <Link href={"./design"} style={{alignSelf: "end"}}>
+          <Button
+            size="md"
+            disabled={
+              audiogramDetails.srtFile.length && audiogramDetails.cover.length
+                ? false
+                : true
+            }
+          >
+            Next
+          </Button>
+        </Link>
+      </Stack>
+    </Flex>
   );
 }
 
