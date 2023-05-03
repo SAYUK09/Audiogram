@@ -26,8 +26,6 @@ export default function Home() {
   const uploadImage = async (files: FileWithPath[]) => {
     const formData = new FormData();
 
-    console.log(files, "fiflfilfiflfi");
-
     if (files[0]) {
       formData.append("file", files[0]);
       formData.append("upload_preset", "audiogramImages");

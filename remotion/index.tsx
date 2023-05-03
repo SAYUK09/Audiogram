@@ -16,10 +16,13 @@ export const RenderComposition = () => {
         height={audiogramDetails.orientation.compositionHeight}
         defaultProps={{
           audioOffsetInFrames: 0,
-          source: audiogramDetails.srtFile,
+          srtFile: audiogramDetails.srtFile,
+          audio: audiogramDetails.audio,
           backgroundColor: audiogramDetails.designProps.backgroundColor,
           textColor: audiogramDetails.designProps.textColor,
           titleColor: audiogramDetails.designProps.titleColor,
+          cover: audiogramDetails.cover,
+          title: audiogramDetails.title,
         }}
       />
     </>

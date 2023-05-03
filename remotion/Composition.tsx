@@ -1,4 +1,4 @@
-import {useAudiogram} from "@/contexts/audiogramContext";
+import {useAudiogram} from "../contexts/audiogramContext";
 import {useAudioData, visualizeAudio} from "@remotion/media-utils";
 import React, {useEffect, useRef, useState} from "react";
 import {
@@ -54,17 +54,23 @@ const AudioViz = () => {
 };
 
 export const AudiogramComposition: React.FC<{
-  source: string;
+  srtFile: string;
   audioOffsetInFrames: number;
   backgroundColor: string;
   textColor: string;
   titleColor: string;
+  cover: string;
+  title: string;
+  audio: string;
 }> = ({
-  source,
+  srtFile,
   audioOffsetInFrames,
   backgroundColor,
   textColor,
   titleColor,
+  cover,
+  title,
+  audio,
 }) => {
   const {durationInFrames} = useVideoConfig();
 
@@ -72,10 +78,8 @@ export const AudiogramComposition: React.FC<{
   const [subtitles, setSubtitles] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
-  const {audiogramDetails} = useAudiogram();
-
   useEffect(() => {
-    fetch(source)
+    fetch(srtFile)
       .then((res) => res.text())
       .then((text) => {
         setSubtitles(text);
@@ -86,7 +90,7 @@ export const AudiogramComposition: React.FC<{
       .catch((err) => {
         console.log("Error fetching subtitles", err);
       });
-  }, [handle, source]);
+  }, [handle, srtFile]);
 
   if (!subtitles) {
     return null;
@@ -96,7 +100,7 @@ export const AudiogramComposition: React.FC<{
     <div ref={ref}>
       <AbsoluteFill>
         <Sequence from={-audioOffsetInFrames}>
-          <Audio src={audiogramDetails.audio} />
+          <Audio src={audio} />
 
           <div
             className="container"
@@ -108,13 +112,13 @@ export const AudiogramComposition: React.FC<{
             <div className="row">
               <Img
                 className="cover"
-                src={audiogramDetails.cover}
+                src={cover}
                 width={500}
                 alt="cover image"
               />
 
               <div style={{color: titleColor}} className="title">
-                {audiogramDetails.title}
+                {title}
               </div>
             </div>
 

@@ -2,14 +2,13 @@ import {orientationType, useAudiogram} from "@/contexts/audiogramContext";
 import {AudiogramComposition} from "@/remotion/Composition";
 import {Player} from "@remotion/player";
 import Link from "next/link";
-import React, {useState} from "react";
-import LandscapeIcon from "@/assets/landscape-icon.svg";
+import React from "react";
 import {
   IconRectangle,
   IconRectangleVertical,
   IconSquare,
 } from "@tabler/icons-react";
-import {ActionIcon, Box, Button, Flex, Group, Stack, Text} from "@mantine/core";
+import {Box, Button, Flex, Group, Stack, Text} from "@mantine/core";
 
 function frame() {
   const {audiogramDetails, setAudiogramDetails} = useAudiogram();
@@ -86,10 +85,13 @@ function frame() {
               controls
               inputProps={{
                 audioOffsetInFrames: 0,
-                source: audiogramDetails.srtFile,
+                srtFile: audiogramDetails.srtFile,
+                audio: audiogramDetails.audio,
                 backgroundColor: audiogramDetails.designProps.backgroundColor,
                 textColor: audiogramDetails.designProps.textColor,
                 titleColor: audiogramDetails.designProps.titleColor,
+                cover: audiogramDetails.cover,
+                title: audiogramDetails.title,
               }}
             />
           )}

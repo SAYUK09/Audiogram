@@ -1,6 +1,6 @@
 import {useAudiogram} from "@/contexts/audiogramContext";
 import {AudiogramComposition} from "@/remotion/Composition";
-import {exportVideo, getDownloadUrlAndProgress} from "@/services/export";
+import {exportVideo} from "@/services/export";
 import {Player} from "@remotion/player";
 import React, {useRef, useState} from "react";
 import {
@@ -20,10 +20,11 @@ function Design() {
   const [downloadURL, setDownloadURL] = useState<string>("");
 
   async function handleExport() {
-    const {data} = await exportVideo({
+    const data = await exportVideo({
       inputProps: {
         backgroundColor: audiogramDetails.designProps.backgroundColor,
         textColor: audiogramDetails.designProps.textColor,
+        titleColor: audiogramDetails.designProps.titleColor,
         audio: audiogramDetails.audio,
         source: audiogramDetails.srtFile,
         title: audiogramDetails.title,
@@ -34,27 +35,29 @@ function Design() {
       height: audiogramDetails.orientation.compositionHeight,
     });
 
-    if (data.bucketName && data.renderId) {
-      getDownloadURL(data);
-    }
+    console.log(data, "data");
+
+    // if (data.bucketName && data.renderId) {
+    //   getDownloadURL(data);
+    // }
   }
 
-  async function getDownloadURL(body: any) {
-    const inputBody = body;
+  // async function getDownloadURL(body: any) {
+  //   const inputBody = body;
 
-    setDownloadURL("loading");
-    const {
-      data: {data},
-    } = await getDownloadUrlAndProgress(body);
+  //   setDownloadURL("loading");
+  //   const {
+  //     data: {data},
+  //   } = await getDownloadUrlAndProgress(body);
 
-    if (!data.done) {
-      setTimeout(() => {
-        getDownloadURL(inputBody);
-      }, 8000);
-    } else {
-      setDownloadURL(data.url);
-    }
-  }
+  //   if (!data.done) {
+  //     setTimeout(() => {
+  //       getDownloadURL(inputBody);
+  //     }, 8000);
+  //   } else {
+  //     setDownloadURL(data.url);
+  //   }
+  // }
 
   const fps = 30;
   const durationInFrames = 30 * fps;
@@ -217,15 +220,18 @@ function Design() {
             controls
             inputProps={{
               audioOffsetInFrames: 0,
-              source: audiogramDetails.srtFile,
+              srtFile: audiogramDetails.srtFile,
+              audio: audiogramDetails.audio,
               backgroundColor: audiogramDetails.designProps.backgroundColor,
               textColor: audiogramDetails.designProps.textColor,
               titleColor: audiogramDetails.designProps.titleColor,
+              cover: audiogramDetails.cover,
+              title: audiogramDetails.title,
             }}
           />
         )}
       </Stack>
-      {/* <button onClick={handleExport}>Download Video</button> */}
+      <button onClick={handleExport}>Download Video</button>
     </Flex>
   );
 }
