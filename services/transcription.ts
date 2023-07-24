@@ -8,7 +8,7 @@ export async function transcribeAudio(audioUrl: string): Promise<string> {
   const request: TranscriptionRequest = {audio_url: audioUrl};
   try {
     const response = await axios.post(
-      "http://localhost:5000/transcribe",
+      "http://localhost:8000/transcribe",
       request,
       {
         headers: {

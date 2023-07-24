@@ -11,7 +11,7 @@ import {
   PDF_MIME_TYPE,
 } from "@mantine/dropzone";
 import {transcribeAudio} from "@/services/transcription";
-import {Box, Button, Flex, Stack} from "@mantine/core";
+import {Box, Button, Container, Flex, Loader, Stack, Text} from "@mantine/core";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -102,8 +102,22 @@ export default function Home() {
             </Box>
           </Stack>
 
-          <Stack>
-            <Link href={"./frame"} style={{alignSelf: "end"}}>
+          <Flex justify={"space-between"}>
+            <Flex p={8} align="center">
+              <Text
+                variant="gradient"
+                gradient={{from: "indigo", to: "white", deg: 45}}
+                sx={{fontFamily: "Greycliff CF, sans-serif"}}
+                ta="center"
+                fz="xl"
+                fw={700}
+              >
+                Sit Tight! While we are generating a transcript for your
+                audiogram
+              </Text>
+              <Box mx={8}>{/* <Loader variant="bars" /> */}</Box>
+            </Flex>
+            <Link href={"./frame"}>
               <Button
                 size="md"
                 disabled={
@@ -116,7 +130,7 @@ export default function Home() {
                 Next
               </Button>
             </Link>
-          </Stack>
+          </Flex>
         </Flex>
       </main>
     </>
