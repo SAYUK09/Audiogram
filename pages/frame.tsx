@@ -1,19 +1,31 @@
-import {orientationType, useAudiogram} from "@/contexts/audiogramContext";
-import {AudiogramComposition} from "@/remotion/Composition";
-import {Player} from "@remotion/player";
+import { orientationType, useAudiogram } from "@/contexts/audiogramContext";
+import { AudiogramComposition } from "@/remotion/Composition";
+import { Player } from "@remotion/player";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   IconRectangle,
   IconRectangleVertical,
   IconSquare,
 } from "@tabler/icons-react";
-import {Box, Button, Flex, Group, Stack, Text} from "@mantine/core";
+import { Box, Button, Flex, Group, Stack, Text } from "@mantine/core";
+import getAudioDuration from "@/utility/getAudioDuration";
 
 function frame() {
-  const {audiogramDetails, setAudiogramDetails} = useAudiogram();
+  const { audiogramDetails, setAudiogramDetails } = useAudiogram();
   const fps = 30;
-  const durationInFrames = 30 * fps;
+  const [duration, setDuration] = useState<number>(1);
+
+  useEffect(() => {
+    const fetchAudioDuration = async () => {
+      const audioDuration = await getAudioDuration(audiogramDetails.audio);
+      if (audioDuration !== null) {
+        setDuration(Math.round(audioDuration * fps));
+      }
+    };
+
+    fetchAudioDuration();
+  }, [audiogramDetails.audio]);
 
   const clickHandler = (value: keyof typeof orientationType) => {
     const val = value;
@@ -32,7 +44,7 @@ function frame() {
         align="center"
         direction="row"
         wrap="wrap"
-        style={{flexGrow: 1}}
+        style={{ flexGrow: 1 }}
       >
         <Stack>
           <Text fz={"xl"}>Select Frame</Text>
@@ -74,7 +86,7 @@ function frame() {
           {audiogramDetails.audio && audiogramDetails.srtFile && (
             <Player
               component={AudiogramComposition}
-              durationInFrames={durationInFrames}
+              durationInFrames={duration}
               fps={fps}
               compositionWidth={audiogramDetails.orientation.compositionWidth}
               compositionHeight={audiogramDetails.orientation.compositionHeight}
@@ -98,7 +110,7 @@ function frame() {
         </Stack>
       </Flex>
       <Stack>
-        <Link href={"./design"} style={{alignSelf: "end"}}>
+        <Link href={"./design"} style={{ alignSelf: "end" }}>
           <Button
             size="md"
             disabled={

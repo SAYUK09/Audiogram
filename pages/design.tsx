@@ -1,8 +1,8 @@
-import {useAudiogram} from "@/contexts/audiogramContext";
-import {AudiogramComposition} from "@/remotion/Composition";
-import {exportVideo} from "@/services/export";
-import {Player} from "@remotion/player";
-import React, {useRef, useState} from "react";
+import { useAudiogram } from "@/contexts/audiogramContext";
+import { AudiogramComposition } from "@/remotion/Composition";
+import { exportVideo } from "@/services/export";
+import { Player } from "@remotion/player";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ColorPicker,
   Text,
@@ -14,14 +14,28 @@ import {
   Button,
   Loader,
 } from "@mantine/core";
+import getAudioDuration from "@/utility/getAudioDuration";
 
 function Design() {
-  const {audiogramDetails, setAudiogramDetails} = useAudiogram();
-  const titleInput = useRef<HTMLInputElement | null>(null);
+  const { audiogramDetails, setAudiogramDetails } = useAudiogram();
+  const fps = 30;
 
   const [downloadURL, setDownloadURL] = useState<string>("");
   const [downloadMsg, setDownloadMsg] = useState<string>("");
   const [disableDownload, setDisableDownload] = useState<boolean>(false);
+
+  const [duration, setDuration] = useState<number>(1);
+
+  useEffect(() => {
+    const fetchAudioDuration = async () => {
+      const audioDuration = await getAudioDuration(audiogramDetails.audio);
+      if (audioDuration !== null) {
+        setDuration(Math.round(audioDuration * fps));
+      }
+    };
+
+    fetchAudioDuration();
+  }, [audiogramDetails.audio]);
 
   const regexPattern = /(?<=srt\/).*?(?=.srt)/;
   const srtFileName = audiogramDetails.srtFile.match(regexPattern);
@@ -29,7 +43,7 @@ function Design() {
   async function handleExport() {
     setDisableDownload(true);
     setDownloadMsg("Sit tight, your audiogram is on your way!");
-    const {data} = await exportVideo({
+    const { data } = await exportVideo({
       inputProps: {
         backgroundColor: audiogramDetails.designProps.backgroundColor,
         textColor: audiogramDetails.designProps.textColor,
@@ -51,8 +65,6 @@ function Design() {
     data && setDownloadMsg("");
   }
 
-  const fps = 30;
-  const durationInFrames = 30 * fps;
   return (
     <Flex mih={"100vh"} direction="column" justify={"space-evenly"}>
       <Flex
@@ -143,7 +155,7 @@ function Design() {
                       "#fab005",
                       "#fd7e14",
                     ]}
-                    value={audiogramDetails.designProps.backgroundColor}
+                    value={audiogramDetails.designProps.titleColor}
                     onChange={(color) => {
                       setAudiogramDetails({
                         ...audiogramDetails,
@@ -181,7 +193,7 @@ function Design() {
                       "#fab005",
                       "#fd7e14",
                     ]}
-                    value={audiogramDetails.designProps.backgroundColor}
+                    value={audiogramDetails.designProps.textColor}
                     onChange={(color) => {
                       setAudiogramDetails({
                         ...audiogramDetails,
@@ -201,7 +213,7 @@ function Design() {
           {audiogramDetails.audio && audiogramDetails.srtFile && (
             <Player
               component={AudiogramComposition}
-              durationInFrames={durationInFrames}
+              durationInFrames={duration}
               fps={fps}
               compositionWidth={audiogramDetails.orientation.compositionWidth}
               compositionHeight={audiogramDetails.orientation.compositionHeight}
@@ -233,8 +245,8 @@ function Design() {
         <Flex p={8} align="center">
           <Text
             variant="gradient"
-            gradient={{from: "indigo", to: "white", deg: 45}}
-            sx={{fontFamily: "Greycliff CF, sans-serif"}}
+            gradient={{ from: "indigo", to: "white", deg: 45 }}
+            sx={{ fontFamily: "Greycliff CF, sans-serif" }}
             ta="center"
             fz="xl"
             fw={700}
