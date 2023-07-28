@@ -56,10 +56,10 @@ function Design() {
       },
       width: audiogramDetails.orientation.compositionWidth,
       height: audiogramDetails.orientation.compositionHeight,
+      duration,
       fileName: (srtFileName && srtFileName[0]) || "Audiogram",
     });
 
-    console.log(data, "data");
     setDownloadURL(data);
     data && setDisableDownload(false);
     data && setDownloadMsg("");

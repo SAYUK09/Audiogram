@@ -1,5 +1,5 @@
-import {IAudiogramDetails} from "@/types/audiogram";
-import React, {createContext, useState, useContext} from "react";
+import { IAudiogramDetails } from "@/types/audiogram";
+import React, { createContext, useState, useContext } from "react";
 
 export interface IAudiogramContext {
   audiogramDetails: IAudiogramDetails;
@@ -34,13 +34,13 @@ export const orientationType = {
 
 const AudigramContext = createContext<IAudiogramContext | null>(null);
 
-export const AudiogramProvider: React.FC<{children: React.ReactNode}> = ({
+export const AudiogramProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [audiogramDetails, setAudiogramDetails] = useState({
     title: "Blah",
     cover:
-      "https://res.cloudinary.com/sayuk/image/upload/v1679044251/audiogram/images/Dalle_fbfxge.png",
+      "https://res.cloudinary.com/sayuk/image/upload/v1690548968/audiogram/images/lexica_gnqdad.jpg",
     audio:
       "https://res.cloudinary.com/sayuk/video/upload/v1679044168/audiogram/audio/clip_jgghuy.mp3",
     srtFile:
@@ -55,7 +55,7 @@ export const AudiogramProvider: React.FC<{children: React.ReactNode}> = ({
   });
 
   return (
-    <AudigramContext.Provider value={{audiogramDetails, setAudiogramDetails}}>
+    <AudigramContext.Provider value={{ audiogramDetails, setAudiogramDetails }}>
       {children}
     </AudigramContext.Provider>
   );

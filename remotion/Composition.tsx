@@ -1,6 +1,6 @@
-import {useAudiogram} from "../contexts/audiogramContext";
-import {useAudioData, visualizeAudio} from "@remotion/media-utils";
-import React, {useEffect, useRef, useState} from "react";
+import { useAudiogram } from "../contexts/audiogramContext";
+import { useAudioData, visualizeAudio } from "@remotion/media-utils";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AbsoluteFill,
   Audio,
@@ -11,12 +11,12 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import {LINE_HEIGHT, PaginatedSubtitles} from "./Subtitles";
+import { LINE_HEIGHT, PaginatedSubtitles } from "./Subtitles";
 
 const AudioViz = () => {
   const frame = useCurrentFrame();
-  const {fps} = useVideoConfig();
-  const {audiogramDetails} = useAudiogram();
+  const { fps } = useVideoConfig();
+  const { audiogramDetails } = useAudiogram();
   const audioData = useAudioData(audiogramDetails.audio);
 
   if (!audioData) {
@@ -72,7 +72,7 @@ export const AudiogramComposition: React.FC<{
   title,
   audio,
 }) => {
-  const {durationInFrames} = useVideoConfig();
+  const { durationInFrames } = useVideoConfig();
 
   const [handle] = useState(() => delayRender());
   const [subtitles, setSubtitles] = useState<string | null>(null);
@@ -113,11 +113,12 @@ export const AudiogramComposition: React.FC<{
               <Img
                 className="cover"
                 src={cover}
+                height={500}
                 width={500}
                 alt="cover image"
               />
 
-              <div style={{color: titleColor}} className="title">
+              <div style={{ color: titleColor }} className="title">
                 {title}
               </div>
             </div>
@@ -127,7 +128,7 @@ export const AudiogramComposition: React.FC<{
             </div>
 
             <div
-              style={{lineHeight: `${LINE_HEIGHT}px`, color: textColor}}
+              style={{ lineHeight: `${LINE_HEIGHT}px`, color: textColor }}
               className="captions"
             >
               <PaginatedSubtitles
