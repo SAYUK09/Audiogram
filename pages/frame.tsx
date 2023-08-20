@@ -11,7 +11,7 @@ import {
 import { Box, Button, Flex, Group, Stack, Text } from "@mantine/core";
 import getAudioDuration from "@/utility/getAudioDuration";
 
-function frame() {
+function Frame() {
   const { audiogramDetails, setAudiogramDetails } = useAudiogram();
   const fps = 30;
   const [duration, setDuration] = useState<number>(1);
@@ -127,4 +127,4 @@ function frame() {
   );
 }
 
-export default frame;
+export default Frame;
