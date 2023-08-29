@@ -9,21 +9,11 @@ import { Box, Button, Flex, Loader, Stack, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [loader, setLoader] = useState<boolean>(false);
   const { audiogramDetails, setAudiogramDetails } = useAudiogram();
 
   const acceptedFileTypes = ".mp3";
 
-  useEffect(() => {
-    audiogramDetails.srtFile.length && audiogramDetails.cover.length
-      ? setLoader(true)
-      : setLoader(false);
-
-    return () => setLoader(false);
-  }, [audiogramDetails.srtFile, audiogramDetails.cover]);
-
   const uploadImage = async (files: FileWithPath[]) => {
-    setLoader(true);
     const formData = new FormData();
 
     if (files[0]) {
@@ -44,7 +34,6 @@ export default function Home() {
   };
 
   const uploadAudio = async (files: FileWithPath[]) => {
-    setLoader(true);
     try {
       if (!files[0]) {
         throw new Error("Please select a file.");
@@ -112,28 +101,28 @@ export default function Home() {
           </Stack>
 
           <Flex justify={"space-between"}>
-            {loader ? (
-              <Flex p={8} align="center">
-                <Text
-                  variant="gradient"
-                  gradient={{ from: "indigo", to: "white", deg: 45 }}
-                  sx={{ fontFamily: "Greycliff CF, sans-serif" }}
-                  ta="center"
-                  fz="xl"
-                  fw={700}
-                >
-                  Sit Tight! While we are generating a transcript for your
-                  audiogram
-                </Text>
-                <Box mx={8}>
-                  <Loader variant="bars" />
-                </Box>
-              </Flex>
-            ) : (
-              <></>
-            )}
+            <Flex p={8} align="center">
+              <Text
+                variant="gradient"
+                gradient={{ from: "indigo", to: "white", deg: 45 }}
+                sx={{ fontFamily: "Greycliff CF, sans-serif" }}
+                ta="center"
+                fz="xl"
+                fw={700}
+              >
+                Sit Tight! While we are generating a transcript for your
+                audiogram
+              </Text>
+            </Flex>
 
-            <Button size="md" disabled={!loader}>
+            <Button
+              size="md"
+              disabled={
+                audiogramDetails.srtFile.length && audiogramDetails.cover.length
+                  ? false
+                  : true
+              }
+            >
               <Link href={"./frame"} style={{ textDecoration: "none" }}>
                 <Box>Next</Box>
               </Link>
