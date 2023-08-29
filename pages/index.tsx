@@ -1,29 +1,29 @@
 import Head from "next/head";
-import {Inter} from "next/font/google";
-import {useAudiogram} from "@/contexts/audiogramContext";
+import { useAudiogram } from "@/contexts/audiogramContext";
 import axios from "axios";
 import Link from "next/link";
 import FileUpload from "@/components/FileDropzoneUpload";
-import {
-  FileWithPath,
-  IMAGE_MIME_TYPE,
-  MIME_TYPES,
-  PDF_MIME_TYPE,
-} from "@mantine/dropzone";
-import {transcribeAudio} from "@/services/transcription";
-import {Box, Button, Container, Flex, Loader, Stack, Text} from "@mantine/core";
-
-const inter = Inter({subsets: ["latin"]});
+import { FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
+import { transcribeAudio } from "@/services/transcription";
+import { Box, Button, Flex, Loader, Stack, Text } from "@mantine/core";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const fps = 30;
-  const durationInFrames = 30 * fps;
-  const {audiogramDetails, setAudiogramDetails} = useAudiogram();
-  const {} = useAudiogram();
+  const [loader, setLoader] = useState<boolean>(false);
+  const { audiogramDetails, setAudiogramDetails } = useAudiogram();
 
   const acceptedFileTypes = ".mp3";
 
+  useEffect(() => {
+    audiogramDetails.srtFile.length && audiogramDetails.cover.length
+      ? setLoader(true)
+      : setLoader(false);
+
+    return () => setLoader(false);
+  }, [audiogramDetails.srtFile, audiogramDetails.cover]);
+
   const uploadImage = async (files: FileWithPath[]) => {
+    setLoader(true);
     const formData = new FormData();
 
     if (files[0]) {
@@ -37,13 +37,14 @@ export default function Home() {
         formData
       );
 
-      setAudiogramDetails({...audiogramDetails, cover: res.data.secure_url});
+      setAudiogramDetails({ ...audiogramDetails, cover: res.data.secure_url });
     } catch (err) {
       console.error(err);
     }
   };
 
   const uploadAudio = async (files: FileWithPath[]) => {
+    setLoader(true);
     try {
       if (!files[0]) {
         throw new Error("Please select a file.");
@@ -53,11 +54,11 @@ export default function Home() {
       formData.append("file", files[0]);
       formData.append("upload_preset", "audiogramAudio");
 
-      const {data} = await axios.post(
+      const { data } = await axios.post(
         "https://api.cloudinary.com/v1_1/sayuk/upload",
         formData
       );
-      const {secure_url: audioUrl} = data;
+      const { secure_url: audioUrl } = data;
 
       // Calling Transcription Service
       const srtUrl = await transcribeAudio(data.secure_url);
@@ -94,42 +95,49 @@ export default function Home() {
         >
           <Stack>
             <Box>
-              <FileUpload onDrop={uploadAudio} accept={[acceptedFileTypes]} />
+              <FileUpload
+                onDrop={uploadAudio}
+                msg={"Drag or Click to upload Audio Files "}
+                accept={[acceptedFileTypes]}
+              />
             </Box>
 
             <Box>
-              <FileUpload onDrop={uploadImage} accept={IMAGE_MIME_TYPE} />
+              <FileUpload
+                msg={"Drag or Click to Upload Image Files"}
+                onDrop={uploadImage}
+                accept={IMAGE_MIME_TYPE}
+              />
             </Box>
           </Stack>
 
           <Flex justify={"space-between"}>
-            <Flex p={8} align="center">
-              <Text
-                variant="gradient"
-                gradient={{from: "indigo", to: "white", deg: 45}}
-                sx={{fontFamily: "Greycliff CF, sans-serif"}}
-                ta="center"
-                fz="xl"
-                fw={700}
-              >
-                Sit Tight! While we are generating a transcript for your
-                audiogram
-              </Text>
-              <Box mx={8}>{/* <Loader variant="bars" /> */}</Box>
-            </Flex>
-            <Link href={"./frame"}>
-              <Button
-                size="md"
-                disabled={
-                  audiogramDetails.srtFile.length &&
-                  audiogramDetails.cover.length
-                    ? false
-                    : true
-                }
-              >
-                Next
-              </Button>
-            </Link>
+            {loader ? (
+              <Flex p={8} align="center">
+                <Text
+                  variant="gradient"
+                  gradient={{ from: "indigo", to: "white", deg: 45 }}
+                  sx={{ fontFamily: "Greycliff CF, sans-serif" }}
+                  ta="center"
+                  fz="xl"
+                  fw={700}
+                >
+                  Sit Tight! While we are generating a transcript for your
+                  audiogram
+                </Text>
+                <Box mx={8}>
+                  <Loader variant="bars" />
+                </Box>
+              </Flex>
+            ) : (
+              <></>
+            )}
+
+            <Button size="md" disabled={!loader}>
+              <Link href={"./frame"} style={{ textDecoration: "none" }}>
+                <Box>Next</Box>
+              </Link>
+            </Button>
           </Flex>
         </Flex>
       </main>

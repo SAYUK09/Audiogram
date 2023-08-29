@@ -1,8 +1,12 @@
-import {Group, Text, useMantineTheme, rem} from "@mantine/core";
-import {IconUpload, IconFileFilled, IconX} from "@tabler/icons-react";
-import {Dropzone, DropzoneProps, FileWithPath} from "@mantine/dropzone";
+import { Group, Text, useMantineTheme, rem } from "@mantine/core";
+import { IconUpload, IconFileFilled, IconX } from "@tabler/icons-react";
+import { Dropzone, DropzoneProps, FileWithPath } from "@mantine/dropzone";
 
-export function FileUpload({onDrop, ...props}: Partial<DropzoneProps>) {
+interface FileUploadProps extends Partial<DropzoneProps> {
+  msg: string;
+}
+
+export function FileUpload({ onDrop, msg, ...props }: FileUploadProps) {
   const theme = useMantineTheme();
 
   function handleDrop(files: FileWithPath[]) {
@@ -20,7 +24,7 @@ export function FileUpload({onDrop, ...props}: Partial<DropzoneProps>) {
       <Group
         position="center"
         spacing="xl"
-        style={{minHeight: rem(220), pointerEvents: "none"}}
+        style={{ minHeight: rem(220), pointerEvents: "none" }}
       >
         <Dropzone.Accept>
           <IconUpload
@@ -46,7 +50,7 @@ export function FileUpload({onDrop, ...props}: Partial<DropzoneProps>) {
 
         <div>
           <Text size="xl" inline>
-            Drag Files here or click to select files
+            {msg}
           </Text>
 
           <Text size="sm" color="dimmed" inline mt={7}>
