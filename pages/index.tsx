@@ -9,7 +9,14 @@ import { Box, Button, Flex, Loader, Stack, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [disabled, setDisabled] = useState<boolean>(false);
   const { audiogramDetails, setAudiogramDetails } = useAudiogram();
+
+  useEffect(() => {
+    audiogramDetails.srtFile.length && audiogramDetails.cover.length
+      ? setDisabled(false)
+      : setDisabled(true);
+  }, [audiogramDetails.srtFile, audiogramDetails.cover]);
 
   const acceptedFileTypes = ".mp3";
 
@@ -27,7 +34,10 @@ export default function Home() {
         formData
       );
 
-      setAudiogramDetails({ ...audiogramDetails, cover: res.data.secure_url });
+      setAudiogramDetails((prevDetails) => ({
+        ...prevDetails,
+        cover: res.data.secure_url,
+      }));
     } catch (err) {
       console.error(err);
     }
@@ -54,11 +64,11 @@ export default function Home() {
 
       audioUrl &&
         srtUrl &&
-        setAudiogramDetails({
-          ...audiogramDetails,
+        setAudiogramDetails((prevDetails) => ({
+          ...prevDetails,
           audio: audioUrl,
           srtFile: srtUrl,
-        });
+        }));
     } catch (error) {
       console.log(error);
     }
@@ -115,14 +125,7 @@ export default function Home() {
               </Text>
             </Flex>
 
-            <Button
-              size="md"
-              disabled={
-                audiogramDetails.srtFile.length && audiogramDetails.cover.length
-                  ? false
-                  : true
-              }
-            >
+            <Button disabled={disabled} size="md">
               <Link href={"./frame"} style={{ textDecoration: "none" }}>
                 <Box>Next</Box>
               </Link>
