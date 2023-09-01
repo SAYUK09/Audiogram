@@ -38,19 +38,16 @@ export const AudiogramProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [audiogramDetails, setAudiogramDetails] = useState({
-    title: "Blah",
-    cover:
-      "https://res.cloudinary.com/sayuk/image/upload/v1690548968/audiogram/images/lexica_gnqdad.jpg",
-    audio:
-      "https://res.cloudinary.com/sayuk/video/upload/v1679044168/audiogram/audio/clip_jgghuy.mp3",
-    srtFile:
-      "https://res.cloudinary.com/sayuk/raw/upload/v1679130523/audiogram/srt/jjazegz2oxj0zyolbcla.srt",
+    title: "Title",
+    cover: "",
+    audio: "",
+    srtFile: "",
     orientation: orientationType.landscape,
 
     designProps: {
-      backgroundColor: "purple",
-      textColor: "yellow",
-      titleColor: "red",
+      backgroundColor: "#1f0223",
+      textColor: "white",
+      titleColor: "white",
     },
   });
 

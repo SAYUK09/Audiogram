@@ -73,7 +73,7 @@ export const AudiogramComposition: React.FC<{
   audio,
 }) => {
   const { durationInFrames } = useVideoConfig();
-
+  const { audiogramDetails } = useAudiogram();
   const [handle] = useState(() => delayRender());
   const [subtitles, setSubtitles] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -113,8 +113,20 @@ export const AudiogramComposition: React.FC<{
               <Img
                 className="cover"
                 src={cover}
-                height={500}
-                width={500}
+                height={
+                  audiogramDetails.orientation.orientation === "Square"
+                    ? 250
+                    : audiogramDetails.orientation.orientation === "Landscape"
+                    ? 350
+                    : 500
+                }
+                width={
+                  audiogramDetails.orientation.orientation === "Square"
+                    ? 250
+                    : audiogramDetails.orientation.orientation === "Landscape"
+                    ? 350
+                    : 500
+                }
                 alt="cover image"
               />
 
@@ -123,7 +135,14 @@ export const AudiogramComposition: React.FC<{
               </div>
             </div>
 
-            <div>
+            <div
+              style={{
+                margin:
+                  audiogramDetails.orientation.orientation === "Portrait"
+                    ? "8rem 0"
+                    : 0,
+              }}
+            >
               <AudioViz />
             </div>
 
