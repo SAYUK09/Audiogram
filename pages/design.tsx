@@ -15,6 +15,7 @@ import {
   Loader,
 } from "@mantine/core";
 import getAudioDuration from "@/utility/getAudioDuration";
+import Head from "next/head";
 
 function Design() {
   const { audiogramDetails, setAudiogramDetails } = useAudiogram();
@@ -67,6 +68,9 @@ function Design() {
 
   return (
     <Flex mih={"100vh"} direction="column" justify={"space-evenly"}>
+      <Head>
+        <title>Audiogram | Design</title>
+      </Head>
       <Flex
         p={32}
         gap="xl"

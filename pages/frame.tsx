@@ -10,6 +10,7 @@ import {
 } from "@tabler/icons-react";
 import { Box, Button, Flex, Group, Stack, Text } from "@mantine/core";
 import getAudioDuration from "@/utility/getAudioDuration";
+import Head from "next/head";
 
 function Frame() {
   const { audiogramDetails, setAudiogramDetails } = useAudiogram();
@@ -38,6 +39,9 @@ function Frame() {
 
   return (
     <Flex direction={"column"} mih={"100vh"} p={32}>
+      <Head>
+        <title>Audiogram | Frame</title>
+      </Head>
       <Flex
         gap="xl"
         justify="space-around"
