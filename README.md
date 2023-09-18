@@ -58,10 +58,10 @@ Salient features
 ### Preview
 
 <div align="center">
-	<img src="https://user-images.githubusercontent.com/68416000/178802623-5139676c-36df-4c36-a2c5-0195b7263deb.png" alt="demo" width="800">
-	<img src="https://user-images.githubusercontent.com/68416000/178804066-e39f0f17-2848-47f7-89bb-db2c13494aeb.png" alt="demo" width="800">
-	<img src="https://user-images.githubusercontent.com/68416000/178804289-85862eca-266c-4ec4-a44b-d4ca65773489.png" alt="demo" width="800">
-	<img src="https://user-images.githubusercontent.com/68416000/178804882-3a0e5260-dc48-4f12-828a-c142d9652a58.png" alt="demo" width="800">	
+	<img src="https://github.com/SAYUK09/Audiogram/assets/68416000/77e3fe88-4ba7-4f58-bc6f-e63fd6918611" alt="demo" width="800">
+	<img src="https://github.com/SAYUK09/Audiogram/assets/68416000/e4e1702e-11e1-4b6a-9992-316a6b33e822" alt="demo" width="800">
+	<img src="https://github.com/SAYUK09/Audiogram/assets/68416000/7984e1c7-ee3e-4138-b32f-e102792bceb7" alt="demo" width="800">
+	<img src="https://github.com/SAYUK09/Audiogram/assets/68416000/9a43d016-b2fe-4039-95d2-f4ceb3ddcde8" alt="demo" width="800">	
 </div>
 
 ## Built With
