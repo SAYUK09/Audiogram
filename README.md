@@ -71,8 +71,8 @@ Salient features
 		<td align="center" ><a href="https://www.typescriptlang.org"><img style="border-radius: 8px;" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" width="70px;" height="75px;" alt="TypeScript" /><br /><b><font color="#777">TypeScript</font></b></a></td>
 		<td align="center"><a href="https://nextjs.org/"><img src="https://iconape.com/wp-content/files/gm/82643/png/next-js.png" width="70px;" height="75px;" alt="Next JS"/><br /><b><font color="#777">NextJs</font></b></a></td>
 		<td align="center"><a href="https://reactjs.org"><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/68416000/268571168-def90636-6cb8-4069-8d96-c3ada66fc3ef.png" width="80px;" height="75px;" style="border-radius: 8px;" alt="Openai"/><br /><b><font color="#777">Openai Whisper</font></b></a></td>
-		<td align="center"><a href="https://chakra-ui.com/"><img src="https://github.com/SAYUK09/Audiogram/assets/68416000/6e601e29-51ed-438d-b829-3e30e5bf500c" width="75px;"  alt="Pyhton-Flask"/><br /><b><font color="#777">OpenAi Whisper</font></b></a></td>
-        <td align="center"><a href="https://www.mongodb.com/"><img src="https://github.com/SAYUK09/Audiogram/assets/68416000/31cfb6fa-bd63-4bd2-ad5c-820e6fbcced1" width="75px;"  alt="Nodejs"/><br /><b><font color="#777">NodeJS</font></b></a></td>
+		<td align="center"><a href="https://flask.palletsprojects.com/en/2.3.x/"><img src="https://github.com/SAYUK09/Audiogram/assets/68416000/6e601e29-51ed-438d-b829-3e30e5bf500c" width="75px;"  alt="Pyhton-Flask"/><br /><b><font color="#777">Python-Flask</font></b></a></td>
+        <td align="center"><a href="https://nodejs.org/en"><img src="https://github.com/SAYUK09/Audiogram/assets/68416000/31cfb6fa-bd63-4bd2-ad5c-820e6fbcced1" width="75px;"  alt="Nodejs"/><br /><b><font color="#777">NodeJS</font></b></a></td>
 	</tr>	
 </table>
 
