@@ -40,7 +40,8 @@ export const AudiogramProvider: React.FC<{ children: React.ReactNode }> = ({
   const [audiogramDetails, setAudiogramDetails] = useState({
     title: "Title",
     cover: "",
-    audio: "",
+    audio:
+      "https://res.cloudinary.com/sayuk/video/upload/v1695017915/audiogram/audio/Final%20Audio.ogg",
     srtFile: "",
     orientation: orientationType.landscape,
 

@@ -46,14 +46,14 @@ function Design() {
     setDownloadMsg("Sit tight, your audiogram is on your way!");
     const { data } = await exportVideo({
       inputProps: {
+        audioOffsetInFrames: 0,
+        srtFile: audiogramDetails.srtFile,
+        audio: audiogramDetails.audio,
         backgroundColor: audiogramDetails.designProps.backgroundColor,
         textColor: audiogramDetails.designProps.textColor,
         titleColor: audiogramDetails.designProps.titleColor,
-        audio: audiogramDetails.audio,
-        source: audiogramDetails.srtFile,
-        title: audiogramDetails.title,
         cover: audiogramDetails.cover,
-        audioOffsetInFrames: 0,
+        title: audiogramDetails.title,
       },
       width: audiogramDetails.orientation.compositionWidth,
       height: audiogramDetails.orientation.compositionHeight,
