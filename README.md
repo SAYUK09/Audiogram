@@ -76,6 +76,11 @@ Salient features
 	</tr>	
 </table>
 
+<h4>The App is structured as follows:</h4>
+
+- [NodeJS Backend](https://github.com/SAYUK09/Audiogram-Backend) : Renders the video and upload it to cloudinary
+- [Python Transcription Api](https://github.com/SAYUK09/Transcription-Api) : Transcribes the audio file using Openai Whisper
+
 ## Getting Started
 
 #### Prerequisites
