@@ -13,11 +13,14 @@ import {
 } from "remotion";
 import { LINE_HEIGHT, PaginatedSubtitles } from "./Subtitles";
 
-const AudioViz = () => {
+interface AudioVizProps {
+  audio: string;
+}
+
+const AudioViz: React.FC<AudioVizProps> = ({ audio }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const { audiogramDetails } = useAudiogram();
-  const audioData = useAudioData(audiogramDetails.audio);
+  const audioData = useAudioData(audio);
 
   if (!audioData) {
     return null;
@@ -143,7 +146,7 @@ export const AudiogramComposition: React.FC<{
                     : 0,
               }}
             >
-              <AudioViz />
+              <AudioViz audio={audio} />
             </div>
 
             <div
