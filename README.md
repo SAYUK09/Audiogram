@@ -34,7 +34,7 @@
 			</ul>
 		</li>
 		<li><a href="#contact">Contact</a></li>
-		<li><a href="Other Usefull Links">Usefull Links</a></li>
+		<li><a href="#Other Usefull Links">Usefull Links</a></li>
 	</ol>
 </details>
 
