@@ -34,6 +34,7 @@
 			</ul>
 		</li>
 		<li><a href="#contact">Contact</a></li>
+		<li><a href="Other Usefull Links">Usefull Links</a></li>
 	</ol>
 </details>
 
@@ -114,6 +115,12 @@ yarn dev
 
 #### Browse the app
 -   [http://localhost:3000](http://localhost:3000)
+  
+
+## Other Usefull Links
+- [Audiogram Nodejs BE](https://github.com/SAYUK09/Audiogram-Backend)
+- [Flask Transcription API](https://github.com/SAYUK09/Transcription-Api)
+  
 
 ## Contact
 Twitter - [@sayuri_kamble](https://twitter.com/sayuri_kamble) 
