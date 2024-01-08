@@ -90,7 +90,7 @@ export default function Home() {
       </Head>
       <main>
         <Flex
-          h={"100vh"}
+          mih={"100vh"}
           gap="xl"
           justify="space-between"
           align="stretch"
