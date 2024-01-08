@@ -6,7 +6,12 @@ interface FileUploadProps extends Partial<DropzoneProps> {
   msg: string;
 }
 
-export function FileUpload({ onDrop, msg, ...props }: FileUploadProps) {
+export function FileUpload({
+  onDrop,
+  msg,
+  loading,
+  ...props
+}: FileUploadProps) {
   const theme = useMantineTheme();
 
   function handleDrop(files: FileWithPath[]) {
@@ -19,6 +24,7 @@ export function FileUpload({ onDrop, msg, ...props }: FileUploadProps) {
       onReject={(files) => console.log("rejected files", files)}
       maxSize={3 * 1024 ** 2}
       multiple={false}
+      loading={loading}
       {...props}
     >
       <Group

@@ -9,24 +9,23 @@ import { Box, Button, Flex, Loader, Stack, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [disabled, setDisabled] = useState<boolean>(false);
-  const [loader, setLoader] = useState<boolean>(false);
+  const [loading, setLoading] = useState({
+    audioDropboxLoader: false,
+    imgDropboxLoader: false,
+  });
   const { audiogramDetails, setAudiogramDetails } = useAudiogram();
 
   useEffect(() => {
-    audiogramDetails.srtFile.length && audiogramDetails.cover.length
-      ? setDisabled(false)
-      : setDisabled(true);
+    audiogramDetails.cover.length &&
+      setLoading({ ...loading, imgDropboxLoader: false });
 
     audiogramDetails.srtFile.length &&
-      audiogramDetails.cover.length &&
-      setLoader(false);
+      setLoading({ ...loading, audioDropboxLoader: false });
   }, [audiogramDetails.srtFile, audiogramDetails.cover]);
 
-  const acceptedFileTypes = ".mp3";
-
   const uploadImage = async (files: FileWithPath[]) => {
-    setLoader(true);
+    setLoading({ ...loading, imgDropboxLoader: true });
+
     const formData = new FormData();
 
     if (files[0]) {
@@ -50,7 +49,7 @@ export default function Home() {
   };
 
   const uploadAudio = async (files: FileWithPath[]) => {
-    setLoader(true);
+    setLoading({ ...loading, audioDropboxLoader: true });
     try {
       if (!files[0]) {
         throw new Error("Please select a file.");
@@ -104,7 +103,8 @@ export default function Home() {
               <FileUpload
                 onDrop={uploadAudio}
                 msg={"Drag or Click to upload Audio Files "}
-                accept={[acceptedFileTypes]}
+                accept={["audio/mpeg"]}
+                loading={loading.audioDropboxLoader}
               />
             </Box>
 
@@ -113,6 +113,7 @@ export default function Home() {
                 msg={"Drag or Click to Upload Image Files"}
                 onDrop={uploadImage}
                 accept={IMAGE_MIME_TYPE}
+                loading={loading.imgDropboxLoader}
               />
             </Box>
           </Stack>
@@ -133,8 +134,17 @@ export default function Home() {
             </Flex>
             <Link href={"./frame"} style={{ textDecoration: "none" }}>
               <Button
-                disabled={disabled}
-                loading={loader}
+                disabled={
+                  audiogramDetails.srtFile.length &&
+                  audiogramDetails.cover.length
+                    ? false
+                    : true
+                }
+                loading={
+                  loading.audioDropboxLoader || loading.imgDropboxLoader
+                    ? true
+                    : false
+                }
                 loaderPosition="right"
                 size="md"
               >
