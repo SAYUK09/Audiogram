@@ -15,14 +15,6 @@ export default function Home() {
   });
   const { audiogramDetails, setAudiogramDetails } = useAudiogram();
 
-  useEffect(() => {
-    audiogramDetails.cover.length &&
-      setLoading({ ...loading, imgDropboxLoader: false });
-
-    audiogramDetails.srtFile.length &&
-      setLoading({ ...loading, audioDropboxLoader: false });
-  }, [audiogramDetails.srtFile, audiogramDetails.cover]);
-
   const uploadImage = async (files: FileWithPath[]) => {
     setLoading({ ...loading, imgDropboxLoader: true });
 
@@ -43,6 +35,9 @@ export default function Home() {
         ...prevDetails,
         cover: res.data.secure_url,
       }));
+
+      res.data.secure_url &&
+        setLoading({ ...loading, imgDropboxLoader: false });
     } catch (err) {
       console.error(err);
     }
@@ -75,10 +70,23 @@ export default function Home() {
           audio: audioUrl,
           srtFile: srtUrl,
         }));
+
+      audioUrl &&
+        srtUrl &&
+        setLoading({ ...loading, audioDropboxLoader: false });
     } catch (error) {
       console.log(error);
     }
   };
+
+  console.log(
+    loading.imgDropboxLoader,
+    "<---img",
+    "||||",
+    loading.audioDropboxLoader,
+    "<---audio"
+  );
+  console.log();
 
   return (
     <>
