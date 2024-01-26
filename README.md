@@ -97,9 +97,20 @@ git clone https://github.com/SAYUK09/Audiogram
 ```
 
 ## Usage
+Please configure the Backend Dependencies before launching this project.
+- [Audiogram Nodejs BE](https://github.com/SAYUK09/Audiogram-Backend)
+- [Flask Transcription API](https://github.com/SAYUK09/Transcription-Api)
+
 
 #### Run in production mode
-> Make sure to install dependencies with `yarn` command before deploy.
+
+```bash
+yarn 
+```
+
+```bash
+yarn build
+```
 
 ```bash
 yarn start
@@ -108,10 +119,14 @@ yarn start
 #### Run in development mode
 
 ```bash
+yarn 
+```
+
+```bash
 yarn dev
 ```
 
-> Make sure to install dependencies with `yarn` command before development.
+
 
 #### Browse the app
 -   [http://localhost:3000](http://localhost:3000)
