@@ -58,11 +58,17 @@ Salient features
 
 ### Preview
 
+
+
 <div align="center">
-	<img src="https://github.com/SAYUK09/Audiogram/assets/68416000/77e3fe88-4ba7-4f58-bc6f-e63fd6918611" alt="demo" width="800">
-	<img src="https://github.com/SAYUK09/Audiogram/assets/68416000/e4e1702e-11e1-4b6a-9992-316a6b33e822" alt="demo" width="800">
-	<img src="https://github.com/SAYUK09/Audiogram/assets/68416000/7984e1c7-ee3e-4138-b32f-e102792bceb7" alt="demo" width="800">
-	<img src="https://github.com/SAYUK09/Audiogram/assets/68416000/9a43d016-b2fe-4039-95d2-f4ceb3ddcde8" alt="demo" width="800">	
+	<div>
+    	<a href="https://www.loom.com/share/9509ffdf7de54792a8c3f23b62dc7b75">
+      		<p>Audiogram Demo - Watch Video</p>
+    	</a>
+    	<a href="https://www.loom.com/share/9509ffdf7de54792a8c3f23b62dc7b75">
+     		<img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/9509ffdf7de54792a8c3f23b62dc7b75-with-play.gif">
+   	</a>
+  	</div>
 </div>
 
 ## Built With
